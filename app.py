@@ -84,8 +84,8 @@ if st.button("Scan Product"):
         st.stop()
 
     with st.spinner("Scanning..."):
-        url = f"http://127.0.0.1:8000/scan/{barcode}"
-
+        url = f"https://nutri-scanner-backend.onrender.com/scan/{barcode}"
+        
         try:
             res = requests.get(url).json()
         except:
