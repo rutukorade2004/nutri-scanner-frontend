@@ -101,9 +101,27 @@ if st.button("Scan Product"):
         st.subheader(res.get("product_name", "Unknown Product"))
 
         # Ingredients
-        st.write("### 🧂 Ingredients")
-        st.write(res.get("ingredients", "No ingredients found."))
+        st.markdown("### 🧂 Ingredients")
 
+        ingredients = res.get("ingredients", "No ingredients found.")
+
+        # ✅ Add dropdown / collapsible section
+        with st.expander("Show Ingredients", expanded=False):
+            if ingredients != "No ingredients found.":
+                items = [i.strip() for i in ingredients.split(",")]
+                for item in items:
+                    st.markdown(f"- ✅ **{item}**")
+            else:
+                st.warning("No ingredients available.")
+
+        
+
+
+        # Brands
+        st.write("### 🏷️ Brands")
+        st.write(res.get("brands", "Unknown Brand"))
+
+        
         # ML Prediction
         st.write("### 🤖 ML Prediction")
         st.info(res.get("model_prediction", "N/A"))
@@ -124,3 +142,26 @@ if st.button("Scan Product"):
         else:
             for w in warnings:
                 st.warning(w)   
+
+       # Nutriments
+        st.write("### 🍽 Nutritional Information")
+
+        nutriments = res.get("nutriments", {})
+
+        unique_items = {}
+        for key, value in nutriments.items():
+            clean_name = (
+                key.replace("_100g", "")
+                .replace("_serving", "")
+                .replace("_", " ")
+                .strip()
+                .lower()
+            )
+
+            if clean_name not in unique_items:
+                unique_items[clean_name] = value
+
+        # ✅ Add dropdown / expandable section
+        with st.expander("Show Nutritional Details", expanded=False):
+            for name, value in unique_items.items():
+                st.write(f"- **{name.capitalize()}**: {value} g per 100g")
