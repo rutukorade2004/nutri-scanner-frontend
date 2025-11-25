@@ -100,21 +100,9 @@ if st.button("Scan Product"):
         # Product Name
         st.subheader(res.get("product_name", "Unknown Product"))
 
-        # Ingredients
-        st.markdown("### 🧂 Ingredients")
-
-        ingredients = res.get("ingredients", "No ingredients found.")
-
-        # ✅ Add dropdown / collapsible section
-        with st.expander("Show Ingredients", expanded=False):
-            if ingredients != "No ingredients found.":
-                items = [i.strip() for i in ingredients.split(",")]
-                for item in items:
-                    st.markdown(f"- ✅ **{item}**")
-            else:
-                st.warning("No ingredients available.")
-
-        
+        # Ingredients 
+        st.write("### 🧂 Ingredients") 
+        st.write(res.get("ingredients", "No ingredients found."))
 
 
         # Brands
